@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: n.zhuchkevich
+      failOnError: true
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(256)
+              - column:
+                  name: first_name
+                  type: varchar(256)
+              - column:
+                  name: middle_name
+                  type: varchar(256)
+              - column:
+                  name: DOB
+                  type: date
+              - column:
+                  name: password
+                  type: varchar(256)
+              - column:
+                  name: username
+                  type: varchar(256)
+                  constraints:
+                    unique: true
+              - column:
+                  name: enabled
+                  type: tinyint(4)
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(256)
+        - createTable:
+            tableName: form
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(256)
+              - column:
+                  name: first_name
+                  type: varchar(256)
+              - column:
+                  name: middle_name
+                  type: varchar(256)
+              - column:
+                  name: date_created
+                  type: date
+              - column:
+                  name: request
+                  type: varchar(256)
+              - column:
+                  name: phone
+                  type: varchar(50)
+              - column:
+                  name: user_id
+                  type: char(36)
+              - addForeignKeyConstraint:
+                  baseColumnNames: user_id
+                  baseTableName: form
+                  referencedColumnNames: id
+                  referencedTableName: user
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: char(36)
+              - column:
+                  name: role_id
+                  type: char(36)
+              - addForeignKeyConstraint:
+                  baseColumnNames: user_id
+                  baseTableName: user_roles
+                  referencedColumnNames: id
+                  referencedTableName: user
+              - addForeignKeyConstraint:
+                  baseColumnNames: role_id
+                  baseTableName: user_roles
+                  referencedColumnNames: id
+                  referencedTableName: role
+
